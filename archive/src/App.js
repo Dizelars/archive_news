@@ -5,8 +5,8 @@ import Error from "./components/Error"
 import Loader from "./components/Loader"
 import Feed from "./components/Feed"
 
-const url = "https://ictransport.ru/rss-feed-682234369181.xml"
-// const url = "https://ictransport.ru/rss-feed-827453696181.xml"
+// const url = "https://ictransport.ru/rss-feed-682234369181.xml"
+const url = "https://ictransport.ru/rss-feed-827453696181.xml"
 
 function App() {
   const [news, setNews] = useState([])

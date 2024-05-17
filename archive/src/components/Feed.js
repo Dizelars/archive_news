@@ -60,13 +60,10 @@ const Feed = ({ news }) => {
   return (
     <div className='wrapper'>
       <nav>
-        <a href='/'>
-          <img
-            src='https://coddmac.store/codd_news/arrow-left.svg'
-            alt='left arrow'
-          />
-        </a>
-        <a href='google.com'>
+        <a className='linkToNews' href='/'>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.25 14.625L5.625 9L11.25 3.375" stroke="#62A744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <p>К новостям</p>
         </a>
       </nav>

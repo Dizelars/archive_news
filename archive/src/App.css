@@ -102,7 +102,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-
   margin-bottom: 24px;
   /*margin-bottom: 72px;*/
 }
@@ -110,11 +109,21 @@
   height: 50px;
 }
 .wrapper nav a {
-  line-height: 100%;
-  color: #313131;
+  line-height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  transition: all .5s;
+  padding: 18px 12px;
 }
+
+.wrapper nav a:hover {
+  background-color: #e8e8e8;
+  border-radius: 10px;
+}
+
 .wrapper nav a p {
-  color: #313131;
+  color: #62A744;
 }
 
 .filter {
@@ -183,7 +192,7 @@ p.news_date {
   margin-top: 40px;
   width: 100%;
   height: 2px;
-  background: -webkit-linear-gradient(
+  /* background: -webkit-linear-gradient(
     90deg,
     rgb(255, 255, 255),
     rgb(200, 200, 200),
@@ -200,7 +209,10 @@ p.news_date {
     rgb(255, 255, 255),
     rgb(200, 200, 200),
     rgb(255, 255, 255)
-  );
+  ); */
+  background: -webkit-linear-gradient(90deg, #f5f6f7, rgb(200, 200, 200), #f5f6f7);
+  background: -moz-linear-gradient(90deg, #f5f6f7, rgb(200, 200, 200), #f5f6f7);
+  background: linear-gradient(90deg, #f5f6f7, rgb(200, 200, 200), #f5f6f7);
 }
 
 .showMoreButton {
