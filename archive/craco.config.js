@@ -1,0 +1,48 @@
+const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin")
+
+module.exports = {
+  eslint: {
+    enable: true,
+    mode: "extends" || "file",
+    configure: (eslintConfig, { env, paths }) => {
+      /* ... */
+      return eslintConfig
+    },
+    pluginOptions: (eslintPluginOptions, { env, paths }) => {
+      return eslintPluginOptions
+    },
+  },
+  webpack: {
+    configure: (webpackConfig, { env, path }) => {
+      webpackConfig.plugins.forEach((plugin) => {
+        if (plugin instanceof InlineChunkHtmlPlugin) {
+          plugin.tests = [/.+[.]js/]
+        }
+      })
+
+      webpackConfig.output = {
+        ...webpackConfig.output,
+        filename: "static/js/bundle.js",
+      }
+
+      const oneOfRuleIdx = webpackConfig.module.rules.findIndex(
+        (rule) => !!rule.oneOf
+      )
+      webpackConfig.module.rules[oneOfRuleIdx].oneOf.forEach((loader) => {
+        if (
+          loader.test &&
+          loader.test.test &&
+          (loader.test.test("test.module.css") ||
+            loader.test.test("test.module.scss"))
+        ) {
+          loader.use.forEach((use) => {
+            if (use.loader && use.loader.includes("mini-css-extract-plugin")) {
+              use.loader = require.resolve("style-loader")
+            }
+          })
+        }
+      })
+      return webpackConfig
+    },
+  },
+}

@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "MoscowSans";
+  src: local("MoscowSans"),
+    url("./fonts/MoscowSans/MoscowSans_Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+body {
+  font-family: "MoscowSans", Arial, sans-serif;
+  background: #f5f6f7 !important;
+}
+body * {
+  font-family: "MoscowSans", Arial, sans-serif;
+}
