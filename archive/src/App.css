@@ -203,6 +203,26 @@ p.news_date {
   );
 }
 
+.showMoreButton {
+  margin: 0 auto;
+  display: block;
+  font-family: "MoscowSans", Arial, sans-serif;
+
+  box-sizing: border-box;
+  padding: 20px 60px;
+  color: #ffffff;
+  background-color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  margin: 45px auto 0 auto;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.showMoreButton:hover {
+  background-color: #62a744 !important;
+}
+
 @media (max-width: 840px) {
   .wrapper {
     width: 100%;

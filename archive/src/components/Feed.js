@@ -6,9 +6,7 @@ import dayjs from "dayjs"
 const Feed = ({ news }) => {
   const [textFilter, settextFilter] = useState(null)
   const [startTime, setstartTime] = useState(
-    news[16]
-      ? dayjs(new Date(news[16].pubDate).toISOString())
-      : dayjs(new Date(news[news.length - 1].pubDate).toISOString())
+    dayjs(new Date(news[news.length - 1].pubDate).toISOString())
   )
   const [endTime, setendTime] = useState(
     news[12]
@@ -16,13 +14,15 @@ const Feed = ({ news }) => {
       : dayjs(new Date(news[0].pubDate).toISOString())
   )
   const [startMils, setstartMils] = useState(
-    news[16]
-      ? +new Date(news[16].pubDate)
-      : +new Date(news[news.length - 1].pubDate)
+    +new Date(news[news.length - 1].pubDate)
   )
   const [endMils, setEndMils] = useState(
     news[12] ? +new Date(news[12].pubDate) : +new Date(news[0].pubDate)
   )
+
+  const [selectedNews, setselectedNews] = useState([])
+
+  const [counter, setcounter] = useState(10)
 
   const filterNews = (el) => {
     const mils = Date.parse(el.pubDate)
@@ -43,6 +43,7 @@ const Feed = ({ news }) => {
 
   useEffect(() => {
     setTextFilterOnResize()
+    setselectedNews(news.filter(filterNews))
 
     window.addEventListener("resize", setTextFilterOnResize)
 
@@ -50,6 +51,11 @@ const Feed = ({ news }) => {
       window.removeEventListener("resize", setTextFilterOnResize)
     }
   }, [])
+
+  useEffect(() => {
+    setselectedNews(news.filter(filterNews))
+    setcounter(10)
+  }, [startTime, endTime])
 
   return (
     <div className='wrapper'>
@@ -75,8 +81,8 @@ const Feed = ({ news }) => {
           endTime,
         }}
       />
-      {news
-        .filter(filterNews)
+      {selectedNews
+        .slice(0, counter)
         .map(modifyContent)
         .map((item) => (
           <div
@@ -86,6 +92,13 @@ const Feed = ({ news }) => {
             }}
             key={item.pubDate}></div>
         ))}
+      {counter < selectedNews.length && (
+        <button
+          onClick={() => setcounter((c) => c + 10)}
+          className='showMoreButton'>
+          Больше новостей
+        </button>
+      )}
     </div>
   )
 }
