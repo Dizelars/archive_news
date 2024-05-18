@@ -103,10 +103,6 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 24px;
-  /*margin-bottom: 72px;*/
-}
-.wrapper nav img {
-  height: 50px;
 }
 .wrapper nav a {
   line-height: 100% !important;
@@ -285,10 +281,6 @@ p.news_date {
 }
 
 @media (max-width: 440px) {
-  .wrapper {
-    padding-inline: 10px;
-  }
-
   .filter .filter_wrapper {
     gap: 6px;
   }
