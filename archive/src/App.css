@@ -43,10 +43,17 @@
 
 .feed p,
 .feed h1 {
-  font-size: 18px;
   line-height: 1.55;
   color: #313131;
   display: inline;
+}
+
+p.news_date,
+.feed a,
+.feed p,
+.feed .t-redactor__text,
+.feed ul {
+	font-size: 22px;
 }
 
 .feed h4 {
@@ -84,7 +91,6 @@
 }
 
 .feed .t-redactor__text {
-  font-size: 18px;
   line-height: 1.55;
 }
 .feed .t-redactor__preface * {

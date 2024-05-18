@@ -18,3 +18,33 @@ button.Mui-selected:hover {
 .Mui-selected {
   background-color: #62a744 !important;
 }
+
+@media (max-width: 540px) {
+  .MuiFormControl-root {
+    max-width: 88px;
+  }
+  
+  .MuiInputBase-root.MuiOutlinedInput-root input {
+    padding: 8px 4px;
+    padding-right: 0;
+    font-size: 14px;
+  }
+
+  .MuiFormControl-root div {
+    padding: 0;
+  }
+
+  .MuiFormControl-root div div {
+    display: none;
+  }
+  
+  .MuiFormControl-root div button {
+    padding: 0;
+    padding-right: 4px;
+  }
+  
+  .MuiFormControl-root div button svg {
+    width: 0.8em;
+    height: 0.8em;
+  }
+}
