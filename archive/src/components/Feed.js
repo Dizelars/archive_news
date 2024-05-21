@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import modifyContent from "../utils/modifyContent"
 import Filter from "./Filter"
 import dayjs from "dayjs"
 
-const Feed = ({ news }) => {
-  const [textFilter, settextFilter] = useState(null)
+const Feed = ({ news, limited }) => {
   const [startTime, setstartTime] = useState(
     dayjs(new Date(news[news.length - 1].pubDate).toISOString())
   )
@@ -24,45 +23,38 @@ const Feed = ({ news }) => {
 
   const [counter, setcounter] = useState(10)
 
-  const filterNews = (el) => {
-    const mils = Date.parse(el.pubDate)
+  const filterNews = useCallback(
+    (el) => {
+      const mils = Date.parse(el.pubDate)
 
-    if (mils > endMils || mils < startMils) return false
-    return true
-  }
-
-  const setTextFilterOnResize = () => {
-    if (window.innerWidth >= 840)
-      return settextFilter("Показывать  новости вышедшие с")
-
-    if (window.innerWidth < 840 && window.innerWidth > 540)
-      return settextFilter("Показывать  новости с")
-
-    return settextFilter("Новости с")
-  }
-
-  useEffect(() => {
-    setTextFilterOnResize()
-    setselectedNews(news.filter(filterNews))
-
-    window.addEventListener("resize", setTextFilterOnResize)
-
-    return function () {
-      window.removeEventListener("resize", setTextFilterOnResize)
-    }
-  }, [])
+      if (mils > endMils || mils < startMils) return false
+      return true
+    },
+    [endMils, startMils]
+  )
 
   useEffect(() => {
     setselectedNews(news.filter(filterNews))
     setcounter(10)
-  }, [startTime, endTime])
+  }, [startTime, endTime, filterNews, news])
 
   return (
-    <div className='wrapper'>
+    <div className={`wrapper ${limited ? "limited" : ""}`}>
       <nav>
         <a className='linkToNews' href='https://gucodd.ru/auto_news'>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11.25 14.625L5.625 9L11.25 3.375" stroke="#62A744" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            width='18'
+            height='18'
+            viewBox='0 0 18 18'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'>
+            <path
+              d='M11.25 14.625L5.625 9L11.25 3.375'
+              stroke='#62A744'
+              strokeWidth='1.5'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
           </svg>
           <p>К новостям</p>
         </a>
@@ -73,9 +65,9 @@ const Feed = ({ news }) => {
           setEndMils,
           setstartMils,
           setstartTime,
-          textFilter,
           startTime,
           endTime,
+          news,
         }}
       />
       {selectedNews

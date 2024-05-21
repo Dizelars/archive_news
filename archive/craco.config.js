@@ -1,17 +1,6 @@
 const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin")
 
 module.exports = {
-  eslint: {
-    enable: true,
-    mode: "extends" || "file",
-    configure: (eslintConfig, { env, paths }) => {
-      /* ... */
-      return eslintConfig
-    },
-    pluginOptions: (eslintPluginOptions, { env, paths }) => {
-      return eslintPluginOptions
-    },
-  },
   webpack: {
     configure: (webpackConfig, { env, path }) => {
       webpackConfig.plugins.forEach((plugin) => {

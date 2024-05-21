@@ -3,6 +3,14 @@
   border-radius: 10px;
   font-family: "MoscowSans", Arial, sans-serif;
 }
+.special-color-1 .MuiFormControl-root {
+  background-color: #e8e8e8 !important;
+}
+.special-color-1 .MuiInputBase-input {
+  z-index: 2;
+  background-color: #e8e8e8 !important;
+}
+
 .MuiFormControl-root div {
   font-family: "MoscowSans", Arial, sans-serif;
 }
@@ -23,7 +31,7 @@ button.Mui-selected:hover {
   .MuiFormControl-root {
     max-width: 88px;
   }
-  
+
   .MuiInputBase-root.MuiOutlinedInput-root input {
     padding: 8px 4px;
     padding-right: 0;
@@ -37,12 +45,12 @@ button.Mui-selected:hover {
   .MuiFormControl-root div div {
     display: none;
   }
-  
+
   .MuiFormControl-root div button {
     padding: 0;
     padding-right: 4px;
   }
-  
+
   .MuiFormControl-root div button svg {
     width: 0.8em;
     height: 0.8em;
