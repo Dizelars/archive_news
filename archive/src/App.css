@@ -272,7 +272,14 @@ p.news_date {
   .feed h4 {
     font-size: 18px;
   }
+
+  .feed .news_date,
+  .feed .news_source {
+    font-size: 16px;
+  }
+
   .feed .t-redactor__text,
+  .feed ul li,
   .feed .t-redactor__text * {
     font-size: 14px;
   }
