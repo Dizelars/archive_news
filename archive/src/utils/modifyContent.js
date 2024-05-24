@@ -107,6 +107,12 @@ const modifyContent = (item, i) => {
   separator.classList.add("separator")
   content.body.appendChild(separator)
 
+  //удаление картинок и видео для версии для слабовидящих
+  if (!!window.limit) {
+    const objects = content.querySelectorAll("video, img, figure")
+    objects.forEach((node) => node.remove())
+  }
+
   return { ...item, content: content.body.innerHTML }
 }
 

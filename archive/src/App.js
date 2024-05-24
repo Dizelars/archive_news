@@ -11,11 +11,16 @@ const url = "https://ictransport.ru/rss-feed-827453696181.xml"
 function App() {
   const [news, setNews] = useState([])
 
+  const [limited, setlimited] = useState(false)
   const [error, setError] = useState(false)
   const [errorText, seterrorText] = useState("")
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!!window.limit) {
+      setlimited(true)
+    }
+
     fetch(url)
       .then((response) => response.text())
       .then((data) => {
@@ -64,11 +69,10 @@ function App() {
         seterrorText("Ошибка при получении данных")
       })
   }, [])
-
   if (error) return <Error errorText={errorText} />
   if (loading) return <Loader />
 
-  return <Feed news={news} />
+  return <Feed news={news} limited={limited} />
 }
 
 export default App
