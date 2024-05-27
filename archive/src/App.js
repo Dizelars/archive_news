@@ -17,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!!window.limit) {
+    if (window.limit) {
       setlimited(true)
     }
 
