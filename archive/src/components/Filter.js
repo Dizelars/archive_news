@@ -11,6 +11,7 @@ const Filter = ({
   startTime,
   endTime,
   news,
+  limited,
 }) => {
   const [textFilter, settextFilter] = useState(null)
 
@@ -38,25 +39,65 @@ const Filter = ({
     <section className='filter'>
       <div className='filter_wrapper'>
         <span className='text_filter_one'>{textFilter}</span>
-        <DatePicker
-          minDate={dayjs(new Date(news[news.length - 1].pubDate).toISOString())}
-          maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
-          value={startTime}
-          onChange={(newValue) => {
-            setstartTime(newValue)
-            setstartMils(+newValue)
-          }}
-        />
+        {!limited ? (
+          <DatePicker
+            minDate={dayjs(
+              new Date(news[news.length - 1].pubDate).toISOString()
+            )}
+            maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
+            value={startTime}
+            onChange={(newValue) => {
+              setstartTime(newValue)
+              setstartMils(+newValue)
+            }}
+          />
+        ) : (
+          <input
+            min={dayjs(
+              new Date(news[news.length - 1].pubDate).toISOString()
+            ).format("YYYY-MM-DD")}
+            max={dayjs(new Date(news[12].pubDate).toISOString()).format(
+              "YYYY-MM-DD"
+            )}
+            type='date'
+            value={startTime.format("YYYY-MM-DD")}
+            onChange={(e) => {
+              setstartTime(dayjs(e.target.value))
+              setstartMils(+dayjs(e.target.value))
+            }}
+          />
+        )}
+
         <span className='text_filter_two'>по</span>
-        <DatePicker
-          minDate={dayjs(new Date(news[news.length - 1].pubDate).toISOString())}
-          maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
-          value={endTime}
-          onChange={(newValue) => {
-            setendTime(newValue)
-            setEndMils(+newValue)
-          }}
-        />
+
+        {!limited ? (
+          <DatePicker
+            minDate={dayjs(
+              new Date(news[news.length - 1].pubDate).toISOString()
+            )}
+            maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
+            value={endTime}
+            onChange={(newValue) => {
+              setendTime(newValue)
+              setEndMils(+newValue)
+            }}
+          />
+        ) : (
+          <input
+            min={dayjs(
+              new Date(news[news.length - 1].pubDate).toISOString()
+            ).format("YYYY-MM-DD")}
+            max={dayjs(new Date(news[12].pubDate).toISOString()).format(
+              "YYYY-MM-DD"
+            )}
+            type='date'
+            value={endTime.format("YYYY-MM-DD")}
+            onChange={(e) => {
+              setendTime(dayjs(e.target.value))
+              setEndMils(+dayjs(e.target.value))
+            }}
+          />
+        )}
       </div>
     </section>
   )

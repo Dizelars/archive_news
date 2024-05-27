@@ -68,6 +68,7 @@ const Feed = ({ news, limited }) => {
           startTime,
           endTime,
           news,
+          limited,
         }}
       />
       {selectedNews
