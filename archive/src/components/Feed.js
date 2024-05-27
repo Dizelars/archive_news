@@ -41,7 +41,7 @@ const Feed = ({ news, limited }) => {
   return (
     <div className={`wrapper ${limited ? "limited" : ""}`}>
       <nav>
-        <a className='linkToNews' href='https://gucodd.ru/auto_news'>
+        <a className='linkToNews' href={`https://gucodd.ru/${limited ? "auto_news_vision" : "auto_news"}`}>
           <svg
             width='18'
             height='18'
@@ -85,7 +85,7 @@ const Feed = ({ news, limited }) => {
       {counter < selectedNews.length && (
         <button
           onClick={() => setcounter((c) => c + 10)}
-          className='showMoreButton'>
+          className={`showMoreButton ${limited ? "limited" : ""}`}>
           Больше новостей
         </button>
       )}

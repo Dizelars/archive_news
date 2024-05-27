@@ -123,12 +123,17 @@ p.news_date,
 }
 
 .wrapper nav a:hover {
-  background-color: #e8e8e8;
+  background-color: #e8e8e8 !important;
   border-radius: 10px;
 }
 
+.wrapper nav a svg {
+  background-color: transparent !important;
+}
+
 .wrapper nav a p {
-  color: #62a744;
+  color: #62a744 !important;
+  background-color: transparent !important;
 }
 
 .filter {
@@ -208,14 +213,14 @@ p.news_date {
 }
 
 .showMoreButton {
-  margin: 0 auto;
+  margin: 0 auto !important;
   display: block;
-  font-family: "MoscowSans", Arial, sans-serif;
+  font-family: "MoscowSans", Arial, sans-serif !important;
 
   box-sizing: border-box;
   padding: 20px 60px;
-  color: #ffffff;
-  background-color: #000000;
+  color: #ffffff !important;
+  background-color: #000000 !important;
   font-size: 16px;
   font-weight: bold;
   border: none;
@@ -225,6 +230,15 @@ p.news_date {
 }
 .showMoreButton:hover {
   background-color: #62a744 !important;
+}
+
+.showMoreButton.limited {
+  color: #000000 !important;
+  border: 2px solid black !important;
+}
+
+.showMoreButton.limited:hover {
+  color: #ffffff !important;
 }
 
 @media (max-width: 900px) {
