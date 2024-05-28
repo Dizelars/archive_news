@@ -15,7 +15,6 @@ const Filter = ({
 
   const setTextFilterOnResize = () => {
     if (window.innerWidth >= 840) return settextFilter("Показывать  новости за")
-
     // if (window.innerWidth < 840 && window.innerWidth > 540)
     //   return settextFilter("Показывать  новости за")
 
@@ -70,7 +69,6 @@ const Filter = ({
             }}
           />
         )}
-
         {/* <span className='text_filter_two'>по</span> */}
 
         {/* {!limited ? (
