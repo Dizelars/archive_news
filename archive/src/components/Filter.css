@@ -3,6 +3,9 @@
   border-radius: 10px;
   font-family: "MoscowSans", Arial, sans-serif;
 }
+.MuiInputBase-input {
+  font-size: 18px !important;
+}
 .special-color-1 .MuiFormControl-root {
   background-color: #e8e8e8 !important;
 }
@@ -29,7 +32,7 @@ button.Mui-selected:hover {
 
 @media (max-width: 540px) {
   .MuiFormControl-root {
-    max-width: 88px;
+    max-width: 120px;
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root input {

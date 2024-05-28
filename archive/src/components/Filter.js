@@ -5,24 +5,21 @@ import dayjs from "dayjs"
 
 const Filter = ({
   setstartTime,
-  setendTime,
   setstartMils,
   setEndMils,
   startTime,
-  endTime,
   news,
   limited,
 }) => {
   const [textFilter, settextFilter] = useState(null)
 
   const setTextFilterOnResize = () => {
-    if (window.innerWidth >= 840)
-      return settextFilter("Показывать  новости вышедшие с")
+    if (window.innerWidth >= 840) return settextFilter("Показывать  новости за")
 
-    if (window.innerWidth < 840 && window.innerWidth > 540)
-      return settextFilter("Показывать  новости с")
+    // if (window.innerWidth < 840 && window.innerWidth > 540)
+    //   return settextFilter("Показывать  новости за")
 
-    return settextFilter("Новости с")
+    return settextFilter("Новости за")
   }
 
   useEffect(() => {
@@ -46,31 +43,37 @@ const Filter = ({
             )}
             maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
             value={startTime}
+            views={["month", "year"]}
             onChange={(newValue) => {
+              const end = newValue.add(1, "month").subtract(1, "day")
               setstartTime(newValue)
               setstartMils(+newValue)
+              setEndMils(+end)
             }}
           />
         ) : (
           <input
             min={dayjs(
               new Date(news[news.length - 1].pubDate).toISOString()
-            ).format("YYYY-MM-DD")}
+            ).format("YYYY-MM")}
             max={dayjs(new Date(news[12].pubDate).toISOString()).format(
-              "YYYY-MM-DD"
+              "YYYY-MM"
             )}
-            type='date'
-            value={startTime.format("YYYY-MM-DD")}
+            type='month'
+            value={startTime.format("YYYY-MM")}
             onChange={(e) => {
-              setstartTime(dayjs(e.target.value))
-              setstartMils(+dayjs(e.target.value))
+              const start = dayjs(e.target.value)
+              const end = start.add(1, "month").subtract(1, "day")
+              setstartTime(start)
+              setstartMils(+start)
+              setEndMils(+end)
             }}
           />
         )}
 
-        <span className='text_filter_two'>по</span>
+        {/* <span className='text_filter_two'>по</span> */}
 
-        {!limited ? (
+        {/* {!limited ? (
           <DatePicker
             minDate={dayjs(
               new Date(news[news.length - 1].pubDate).toISOString()
@@ -97,7 +100,7 @@ const Filter = ({
               setEndMils(+dayjs(e.target.value))
             }}
           />
-        )}
+        )} */}
       </div>
     </section>
   )

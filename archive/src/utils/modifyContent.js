@@ -50,6 +50,7 @@ const modifyContent = (item, i) => {
   iframes.forEach((iframe) => {
     const videoSrc = iframe.getAttribute("src")
     const video = document.createElement("video")
+    video.poster = "https://coddmac.store/codd_news/codd_video_poster.png"
     video.src = videoSrc
     video.setAttribute("controls", "")
     iframe.replaceWith(video)

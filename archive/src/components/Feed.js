@@ -5,18 +5,18 @@ import dayjs from "dayjs"
 
 const Feed = ({ news, limited }) => {
   const [startTime, setstartTime] = useState(
-    dayjs(new Date(news[news.length - 1].pubDate).toISOString())
-  )
-  const [endTime, setendTime] = useState(
     news[12]
-      ? dayjs(new Date(news[12].pubDate).toISOString())
-      : dayjs(new Date(news[0].pubDate).toISOString())
+      ? dayjs(+new Date(news[12].pubDate)).date(1)
+      : dayjs(+new Date(news[0].pubDate)).date(1)
   )
-  const [startMils, setstartMils] = useState(
-    +new Date(news[news.length - 1].pubDate)
-  )
+  // const [endTime, setendTime] = useState(
+  //   news[12]
+  //     ? dayjs(new Date(news[12].pubDate).toISOString())
+  //     : dayjs(new Date(news[0].pubDate).toISOString())
+  // )
+  const [startMils, setstartMils] = useState(+startTime)
   const [endMils, setEndMils] = useState(
-    news[12] ? +new Date(news[12].pubDate) : +new Date(news[0].pubDate)
+    +startTime.add(1, "month").subtract(1, "day")
   )
 
   const [selectedNews, setselectedNews] = useState([])
@@ -27,21 +27,26 @@ const Feed = ({ news, limited }) => {
     (el) => {
       const mils = Date.parse(el.pubDate)
 
+      if (news[12] && mils > +new Date(news[12].pubDate)) return false
       if (mils > endMils || mils < startMils) return false
       return true
     },
-    [endMils, startMils]
+    [endMils, startMils, news]
   )
 
   useEffect(() => {
     setselectedNews(news.filter(filterNews))
     setcounter(10)
-  }, [startTime, endTime, filterNews, news])
+  }, [startTime, filterNews, news])
 
   return (
     <div className={`wrapper ${limited ? "limited" : ""}`}>
       <nav>
-        <a className='linkToNews' href={`https://gucodd.ru/${limited ? "auto_news_vision" : "auto_news"}`}>
+        <a
+          className='linkToNews'
+          href={`https://gucodd.ru/${
+            limited ? "auto_news_vision" : "auto_news"
+          }`}>
           <svg
             width='18'
             height='18'
@@ -61,12 +66,10 @@ const Feed = ({ news, limited }) => {
       </nav>
       <Filter
         {...{
-          setendTime,
           setEndMils,
           setstartMils,
           setstartTime,
           startTime,
-          endTime,
           news,
           limited,
         }}
