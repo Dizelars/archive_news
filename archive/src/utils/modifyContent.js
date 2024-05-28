@@ -53,7 +53,13 @@ const modifyContent = (item, i) => {
     video.poster = "https://coddmac.store/codd_news/codd_video_poster.png"
     video.src = videoSrc
     video.setAttribute("controls", "")
-    iframe.replaceWith(video)
+    video.setAttribute("playsinline", "")
+  
+    const videoWrapper = document.createElement("div")
+    videoWrapper.classList.add('video_wrapper');
+    videoWrapper.appendChild(video);
+
+    iframe.replaceWith(videoWrapper)
   })
 
   //замена strong на p с классом bold
