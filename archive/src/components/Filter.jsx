@@ -43,7 +43,7 @@ const Filter = ({
             )}
             maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
             value={startTime}
-            views={["month", "year"]}
+            views={["month"]}
             onChange={(newValue) => {
               const end = newValue.add(1, "month").subtract(1, "day")
               setstartTime(newValue)

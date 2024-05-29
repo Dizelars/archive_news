@@ -1,7 +1,9 @@
 .MuiFormControl-root {
   background-color: #e8e8e8;
   border-radius: 10px;
-  font-family: "MoscowSans", Arial, sans-serif;
+  font-family: "MoscowSans", Arial, sans-serif !important;
+
+  max-width: 140px;
 }
 
 .MuiDateCalendar-root {
@@ -19,8 +21,13 @@
   background-color: #e8e8e8 !important;
 }
 
-.MuiFormControl-root div {
-  font-family: "MoscowSans", Arial, sans-serif;
+.MuiFormControl-root,
+.MuiPickersMonth-root button,
+.MuiFormControl-root div,
+.MuiPickersToolbar-root span,
+.MuiPickersToolbar-root div h4,
+.MuiDialogActions-root button {
+  font-family: "MoscowSans", Arial, sans-serif !important;
 }
 .MuiOutlinedInput-notchedOutline {
   border-width: 0 !important;
@@ -35,14 +42,42 @@ button.Mui-selected:hover {
   background-color: #62a744 !important;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 1024px) {
   .MuiFormControl-root {
-    max-width: 120px;
+    max-width: 90px;
+  }
+  
+  .MuiFormControl-root .MuiInputBase-root {
+    padding-right: 0;
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root input {
-    padding: 8px 4px;
-    padding-right: 0;
+    padding: 8px;
+    text-align: center;
+  }
+}
+
+/* @media (max-width: 840px) {
+  .MuiFormControl-root {
+    max-width: 138px;
+  }
+
+  .MuiInputBase-root.MuiOutlinedInput-root input {
+    padding: 8px;
+  }
+} */
+
+@media (max-width: 540px) {
+  .MuiFormControl-root {
+    /* max-width: 120px; */
+    max-width: 80px;
+  }
+
+  .MuiInputBase-root.MuiOutlinedInput-root input {
+    /* padding: 8px 4px; */
+    /* padding: 8px; */
+    /* padding-right: 0; */
+    padding-right: 8px;
     font-size: 14px !important;
   }
 
