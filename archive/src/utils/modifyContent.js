@@ -28,12 +28,15 @@ const modifyContent = (item, i) => {
     images.forEach((img) => {
       inner += `<swiper-slide><img src="${img.src}"/></swiper-slide>`
     })
-
+    // navigation="true"
+    // grab-cursor="true"
     gallery.innerHTML = `
     <swiper-container
-      navigation="true"
       pagination="true"
-      loop>
+      pagination-clickable="true" 
+      auto-height="true"
+      grab-cursor="true"
+      loop="true">
           ${inner}
     </swiper-container>`
   })

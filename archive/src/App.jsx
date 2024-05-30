@@ -5,6 +5,8 @@ import Error from "./components/Error"
 import Loader from "./components/Loader"
 import Feed from "./components/Feed"
 
+import MySwiper from "./components/MySwiper"
+
 // const url = "https://ictransport.ru/rss-feed-682234369181.xml"
 const url = "https://ictransport.ru/rss-feed-827453696181.xml"
 
@@ -71,6 +73,8 @@ function App() {
   }, [])
   if (error) return <Error errorText={errorText} />
   if (loading) return <Loader />
+
+  // return <MySwiper />
 
   return <Feed news={news} limited={limited} />
 }

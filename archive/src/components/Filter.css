@@ -42,6 +42,12 @@ button.Mui-selected:hover {
   background-color: #62a744 !important;
 }
 
+@media (max-width: 1400px) {
+  .MuiInputBase-root.MuiOutlinedInput-root input {
+    text-align: center;
+  }
+}
+
 @media (max-width: 1024px) {
   .MuiFormControl-root {
     max-width: 90px;
@@ -57,26 +63,12 @@ button.Mui-selected:hover {
   }
 }
 
-/* @media (max-width: 840px) {
-  .MuiFormControl-root {
-    max-width: 138px;
-  }
-
-  .MuiInputBase-root.MuiOutlinedInput-root input {
-    padding: 8px;
-  }
-} */
-
 @media (max-width: 540px) {
   .MuiFormControl-root {
-    /* max-width: 120px; */
     max-width: 80px;
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root input {
-    /* padding: 8px 4px; */
-    /* padding: 8px; */
-    /* padding-right: 0; */
     padding-right: 8px;
     font-size: 14px !important;
   }
