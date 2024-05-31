@@ -1,4 +1,13 @@
+import Header from "../components/particles/Header"
+import Image from "../components/particles/Image"
+import RedactorText from "../components/particles/RedactorText"
+import Separator from "../components/particles/Separator"
+import Swiper from "../components/particles/Swiper"
+import Video from "../components/particles/Video"
+
 const modifyContent = (item, i) => {
+  let components = []
+
   const parser = new DOMParser()
   let content = item.content
   content = content.replaceAll("#nbsp", "&nbsp")
@@ -48,6 +57,23 @@ const modifyContent = (item, i) => {
     link.setAttribute("target", "_blank")
   })
 
+  const figures = content.querySelectorAll("figure")
+  figures.forEach((figure) => {
+    const imgInside = figure.querySelector("img")
+
+    if (!imgInside) return
+
+    const newImg = document.createElement("img")
+    newImg.src = imgInside.src
+
+    figure.replaceWith(newImg)
+  })
+
+  const images = content.querySelectorAll("img")
+  images.forEach((image) => {
+    if (image.src === item.image) image.remove()
+  })
+
   //заменяем iframe на video
   const iframes = content.querySelectorAll("iframe")
   iframes.forEach((iframe) => {
@@ -57,10 +83,10 @@ const modifyContent = (item, i) => {
     video.src = videoSrc
     video.setAttribute("controls", "")
     video.setAttribute("playsinline", "")
-  
+
     const videoWrapper = document.createElement("div")
-    videoWrapper.classList.add('video_wrapper');
-    videoWrapper.appendChild(video);
+    videoWrapper.classList.add("video_wrapper")
+    videoWrapper.appendChild(video)
 
     iframe.replaceWith(videoWrapper)
   })
@@ -85,7 +111,11 @@ const modifyContent = (item, i) => {
   })
 
   const redactor_texts = content.querySelectorAll(".t-redactor__text")
+
   redactor_texts.forEach((redText) => {
+    const insideUl = redText.querySelector("ul")
+    if (insideUl) return
+
     const insideP = redText.querySelector("p")
 
     if (!insideP) {
@@ -113,9 +143,14 @@ const modifyContent = (item, i) => {
     redText.replaceWith(newRedText)
   })
 
-  const separator = document.createElement("div")
-  separator.classList.add("separator")
-  content.body.appendChild(separator)
+  const titleImg = document.createElement("img")
+  titleImg.src = item.image
+  titleImg.alt = "title image"
+  content.querySelector("header").appendChild(titleImg)
+
+  // const separator = document.createElement("div")
+  // separator.classList.add("separator")
+  // content.body.appendChild(separator)
 
   //удаление картинок и видео для версии для слабовидящих
   if (!!window.limit) {
@@ -123,7 +158,87 @@ const modifyContent = (item, i) => {
     objects.forEach((node) => node.remove())
   }
 
-  return { ...item, content: content.body.innerHTML }
+  let foundSwiper = null
+
+  content.body.childNodes.forEach((child) => {
+    const tagName = child.localName
+    const key = item.pubDate + components.length
+
+    switch (tagName) {
+      case "header":
+        components.push(<Header innerHTML={child.innerHTML} key={key} />)
+        break
+      case "img":
+        const zoomable = child.nextSibling.localName === "pre"
+        components.push(
+          <Image src={child.src} alt='' key={key} zoomable={zoomable} />
+        )
+        break
+      case "div":
+        if (child.classList.contains("t-redactor__text")) {
+          components.push(
+            <RedactorText innerHTML={child.innerHTML} key={key} />
+          )
+          break
+        } else if (child.classList.contains("video_wrapper")) {
+          const video = child.querySelector("video")
+          components.push(
+            <Video src={video.src} poster={video.poster} key={key} />
+          )
+          break
+        } else if (child.dataset.block === "gallery") {
+          const imgs = [...child.querySelectorAll("img")]
+          const srcs = imgs
+            .map((img) => img.src)
+            .filter((src) => src !== item.image)
+
+          foundSwiper = <Swiper images={srcs} key={+Date.now()} />
+
+          // components.push(<Swiper images={srcs} key={key} />)
+          break
+        }
+        console.log("MISSED DIIIIIIIIIV")
+        console.log(child)
+        components.push(
+          <div
+            dangerouslySetInnerHTML={{ __html: child.innerHTML }}
+            key={key}></div>
+        )
+
+        break
+      case "p":
+        if (child.classList.contains("t-redactor__text")) {
+          components.push(
+            <RedactorText
+              innerHTML={child.innerHTML}
+              paragraph={true}
+              key={key}
+            />
+          )
+          break
+        }
+        components.push(
+          <p
+            dangerouslySetInnerHTML={{ __html: child.innerHTML }}
+            key={key}></p>
+        )
+        break
+      default:
+        if (child.nodeName !== "#text" && child.localName !== "pre") {
+          console.log(content.body.childNodes)
+          console.log(content.body)
+          console.log("WE MISS SOMETHING ALERT!!!")
+          console.log(child)
+        }
+
+        break
+    }
+  })
+
+  if (foundSwiper) components.push(foundSwiper)
+  components.push(<Separator key={item.pubDate + components.length} />)
+
+  return { ...item, content: content.body.innerHTML, components }
 }
 
 export default modifyContent

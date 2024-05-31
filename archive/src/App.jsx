@@ -5,8 +5,6 @@ import Error from "./components/Error"
 import Loader from "./components/Loader"
 import Feed from "./components/Feed"
 
-import MySwiper from "./components/MySwiper"
-
 // const url = "https://ictransport.ru/rss-feed-682234369181.xml"
 const url = "https://ictransport.ru/rss-feed-827453696181.xml"
 
@@ -46,7 +44,7 @@ function App() {
           if (el.querySelector("author"))
             author = el.querySelector("author").textContent
           if (el.querySelector("enclosure"))
-            image = el.querySelector("enclosure").url
+            image = el.querySelector("enclosure").attributes.url.textContent
           if (el.getElementsByTagName("turbo:content")) {
             content = el.getElementsByTagName("turbo:content")[0].textContent
           }

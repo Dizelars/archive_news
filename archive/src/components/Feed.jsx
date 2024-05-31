@@ -74,8 +74,8 @@ const Feed = ({ news, limited }) => {
           limited,
         }}
       />
-      {selectedNews
-        .slice(0, counter)
+      {/* {selectedNews
+        .slice(0, 5)
         .map(modifyContent)
         .map((item) => (
           <div
@@ -84,6 +84,14 @@ const Feed = ({ news, limited }) => {
               __html: item.content,
             }}
             key={item.pubDate}></div>
+        ))} */}
+      {selectedNews
+        .slice(0, counter)
+        .map(modifyContent)
+        .map((item) => (
+          <div className='feed' key={item.pubDate}>
+            {item.components.map((particle) => particle)}
+          </div>
         ))}
       {counter < selectedNews.length && (
         <button
