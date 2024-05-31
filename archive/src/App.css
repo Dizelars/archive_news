@@ -7,9 +7,9 @@
   --swiper-pagination-bullet-inactive-color: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 50%, rgba(98, 167, 68, 1) 60%);
   --swiper-pagination-bullet-inactive-opacity: 1;
 
-  --swiper-pagination-bullet-width: 20px;
-  --swiper-pagination-bullet-height: 20px;
-  --swiper-pagination-bullet-size: 20px;
+  --swiper-pagination-bullet-width: 14px;
+  --swiper-pagination-bullet-height: 14px;
+  --swiper-pagination-bullet-size: 14px;
 }
 
 .feed p.bold {

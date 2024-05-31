@@ -33,7 +33,7 @@ const modifyContent = (item, i) => {
     gallery.innerHTML = `
     <swiper-container
       pagination="true"
-      pagination-clickable="true" 
+      pagination-clickable="true"
       auto-height="true"
       grab-cursor="true"
       loop="true">
