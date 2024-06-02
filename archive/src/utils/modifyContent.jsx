@@ -1,6 +1,7 @@
 import Header from "../components/particles/Header"
 import Image from "../components/particles/Image"
 import RedactorText from "../components/particles/RedactorText"
+import Blockquote from "../components/particles/Blockquote"
 import Separator from "../components/particles/Separator"
 import Swiper from "../components/particles/Swiper"
 import Video from "../components/particles/Video"
@@ -169,7 +170,7 @@ const modifyContent = (item, i) => {
         components.push(<Header innerHTML={child.innerHTML} key={key} />)
         break
       case "img":
-        const zoomable = child.nextSibling.localName === "pre"
+        const zoomable = child.nextSibling.localName === "hr"
         components.push(
           <Image src={child.src} alt='' key={key} zoomable={zoomable} />
         )
@@ -222,6 +223,17 @@ const modifyContent = (item, i) => {
             dangerouslySetInnerHTML={{ __html: child.innerHTML }}
             key={key}></p>
         )
+        break
+      case "blockquote":
+        if (child.classList.contains("t-redactor__quote")) {
+          components.push(
+            <Blockquote
+              innerHTML={child.innerHTML}
+              key={key}
+            />
+          )
+          break
+        }
         break
       default:
         if (child.nodeName !== "#text" && child.localName !== "pre") {
