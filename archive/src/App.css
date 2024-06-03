@@ -4,7 +4,8 @@
   --swiper-theme-color: #62a744;
 
   --swiper-pagination-color: #62a744;
-  --swiper-pagination-bullet-inactive-color: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 50%, rgba(98, 167, 68, 1) 60%);
+  /* --swiper-pagination-bullet-inactive-color: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 50%, rgba(98, 167, 68, 1) 60%); */
+  --swiper-pagination-bullet-inactive-color: #c7c7c7;
   --swiper-pagination-bullet-inactive-opacity: 1;
 
   --swiper-pagination-bullet-width: 14px;
@@ -116,6 +117,39 @@ p.news_date,
   cursor: zoom-in;
 }
 
+.feed swiper-slide img {
+  object-fit: contain;
+}
+
+.feed swiper-slide {
+  cursor: zoom-in;
+}
+
+.feed .zooming_chart.active,
+.feed [data-block="gallery"].active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  z-index: 999999;
+}
+
+.feed .zooming_chart.active img,
+.feed [data-block="gallery"].active swiper-slide {
+  cursor: default;
+}
+
+.feed .zooming_chart.active img {
+  max-height: none;
+  width: max-content;
+  padding: 20px;
+}
+
 /* .feed figure > img {
   width: 100%;
 
@@ -126,11 +160,11 @@ p.news_date,
 .feed ul {
   list-style-type: disc;
   /* padding-left: 20px; */
-  padding-left: 30px;
+  padding-left: 46px;
 }
 
 .feed ol {
-  padding-left: 30px;
+  padding-left: 46px;
 }
 
 .feed .t-redactor__text {
@@ -252,6 +286,7 @@ p.news_date {
 .feed header a.news_source {
   display: block;
   margin-bottom: 10px;
+  width: fit-content;
 }
 
 .separator {

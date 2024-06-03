@@ -99,7 +99,13 @@ const modifyContent = (item, i) => {
     const p = document.createElement("p")
     p.classList.add("bold")
     p.textContent = text
-    strong.replaceWith(p)
+
+    // Проверяем, есть ли у элемента атрибут style и не пустой ли он
+    if (strong.hasAttribute("style") && strong.getAttribute("style").trim() !== "") {
+        p.setAttribute("style", strong.getAttribute("style"));
+    }
+
+    strong.replaceWith(p);
   })
 
   const ems = content.querySelectorAll("em")
@@ -108,6 +114,12 @@ const modifyContent = (item, i) => {
     const p = document.createElement("p")
     p.classList.add("italic")
     p.textContent = text
+
+    // Проверяем, есть ли у элемента атрибут style и не пустой ли он
+    if (em.hasAttribute("style") && em.getAttribute("style").trim() !== "") {
+        p.setAttribute("style", em.getAttribute("style"));
+    }
+
     em.replaceWith(p)
   })
 
@@ -160,6 +172,8 @@ const modifyContent = (item, i) => {
   }
 
   let foundSwiper = null
+  let foundZoom = null
+  let foundVideo = null
 
   content.body.childNodes.forEach((child) => {
     const tagName = child.localName
@@ -171,9 +185,13 @@ const modifyContent = (item, i) => {
         break
       case "img":
         const zoomable = child.nextSibling.localName === "hr"
-        components.push(
-          <Image src={child.src} alt='' key={key} zoomable={zoomable} />
-        )
+        if (zoomable) {
+          foundZoom = <Image src={child.src} alt='' key={key} zoomable={zoomable} />
+        } else {
+          components.push(
+            <Image src={child.src} alt='' key={key}/>
+          )
+        }
         break
       case "div":
         if (child.classList.contains("t-redactor__text")) {
@@ -183,9 +201,10 @@ const modifyContent = (item, i) => {
           break
         } else if (child.classList.contains("video_wrapper")) {
           const video = child.querySelector("video")
-          components.push(
-            <Video src={video.src} poster={video.poster} key={key} />
-          )
+          foundVideo = <Video src={video.src} poster={video.poster} key={key} />
+          // components.push(
+          //   <Video src={video.src} poster={video.poster} key={key} />
+          // )
           break
         } else if (child.dataset.block === "gallery") {
           const imgs = [...child.querySelectorAll("img")]
@@ -236,18 +255,19 @@ const modifyContent = (item, i) => {
         }
         break
       default:
-        if (child.nodeName !== "#text" && child.localName !== "pre") {
+        if (child.nodeName !== "#text" && child.localName !== "hr") {
           console.log(content.body.childNodes)
           console.log(content.body)
           console.log("WE MISS SOMETHING ALERT!!!")
           console.log(child)
         }
-
         break
     }
   })
 
   if (foundSwiper) components.push(foundSwiper)
+  if (foundZoom) components.push(foundZoom)
+  if (foundVideo) components.push(foundVideo)
   components.push(<Separator key={item.pubDate + components.length} />)
 
   return { ...item, content: content.body.innerHTML, components }
