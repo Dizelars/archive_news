@@ -144,6 +144,11 @@ p.news_date,
   cursor: default;
 }
 
+.feed [data-block="gallery"].active swiper-slide img {
+  max-height: 900px;
+  padding: 20px;
+}
+
 .feed .zooming_chart.active img {
   max-height: none;
   max-width: max-content;
@@ -433,6 +438,11 @@ p.news_date {
     width: 108px;
     font-size: 12px;
     padding: 10px 5px;
+  }
+
+  .feed [data-block="gallery"].active swiper-slide img,
+  .feed .zooming_chart.active img {
+    padding: 10px;
   }
 
   .wrapper.limited .filter .filter_wrapper > input {

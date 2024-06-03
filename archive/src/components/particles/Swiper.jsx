@@ -91,12 +91,14 @@ const Swiper = ({ images }) => {
   useEffect(() => {
     const swiperContainer = swiperRef.current;
     const params = {
-      // zoom: true,
+      // zoom: {
+      //   maxRatio: 2
+      // },
       navigation: true,
       pagination: {
         clickable: true,
       },
-      loop: true,
+      // loop: true,
       centerInsufficientSlides: true,
       centeredSlides: true,
       injectStyles: [
@@ -108,6 +110,10 @@ const Swiper = ({ images }) => {
             height: 50px;
             border-radius: 100%;
             color: #62a744;
+          }
+          .swiper-button-next.swiper-button-disabled, 
+          .swiper-button-prev.swiper-button-disabled {
+            pointer-events: all;
           }
           .swiper-button-next svg,
           .swiper-button-prev svg {
@@ -142,11 +148,11 @@ const Swiper = ({ images }) => {
   }, []);
 
   return (
-    <div data-block="gallery" className={isActive ? 'active' : ''} >
+    <div data-block="gallery" className={isActive ? 'active' : ''}>
       <swiper-container ref={swiperRef} init="false">
         {images.map((img, i) => (
           <swiper-slide onClick={galleryClickHandler} key={i}>
-            <img src={img} alt="" />
+              <img src={img} alt=""/>
           </swiper-slide>
         ))}
       </swiper-container>

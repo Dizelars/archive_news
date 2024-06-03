@@ -30,26 +30,24 @@ const modifyContent = (item, i) => {
   linkElement.href = item.link
   content.querySelector("header").appendChild(linkElement)
 
-  const galleries = content.querySelectorAll("[data-block=gallery]")
-  galleries.forEach((gallery) => {
-    let inner = ""
-    const images = gallery.querySelectorAll("img")
+  // const galleries = content.querySelectorAll("[data-block=gallery]")
+  // galleries.forEach((gallery) => {
+  //   let inner = ""
+  //   const images = gallery.querySelectorAll("img")
 
-    images.forEach((img) => {
-      inner += `<swiper-slide><img src="${img.src}"/></swiper-slide>`
-    })
-    // navigation="true"
-    // grab-cursor="true"
-    gallery.innerHTML = `
-    <swiper-container
-      pagination="true"
-      pagination-clickable="true"
-      auto-height="true"
-      grab-cursor="true"
-      loop="true">
-          ${inner}
-    </swiper-container>`
-  })
+  //   images.forEach((img) => {
+  //     inner += `<swiper-slide><img src="${img.src}"/></swiper-slide>`
+  //   })
+  //   gallery.innerHTML = `
+  //   <swiper-container
+  //     pagination="true"
+  //     pagination-clickable="true"
+  //     auto-height="true"
+  //     grab-cursor="true"
+  //     loop="true">
+  //         ${inner}
+  //   </swiper-container>`
+  // })
 
   // Получаем все ссылки
   const links = content.querySelectorAll("a")
@@ -124,7 +122,6 @@ const modifyContent = (item, i) => {
   })
 
   const redactor_texts = content.querySelectorAll(".t-redactor__text")
-
   redactor_texts.forEach((redText) => {
     const insideUl = redText.querySelector("ul")
     if (insideUl) return
@@ -202,9 +199,6 @@ const modifyContent = (item, i) => {
         } else if (child.classList.contains("video_wrapper")) {
           const video = child.querySelector("video")
           foundVideo = <Video src={video.src} poster={video.poster} key={key} />
-          // components.push(
-          //   <Video src={video.src} poster={video.poster} key={key} />
-          // )
           break
         } else if (child.dataset.block === "gallery") {
           const imgs = [...child.querySelectorAll("img")]
@@ -213,8 +207,6 @@ const modifyContent = (item, i) => {
             .filter((src) => src !== item.image)
 
           foundSwiper = <Swiper images={srcs} key={+Date.now()} />
-
-          // components.push(<Swiper images={srcs} key={key} />)
           break
         }
         console.log("MISSED DIIIIIIIIIV")
