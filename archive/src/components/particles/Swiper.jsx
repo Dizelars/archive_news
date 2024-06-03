@@ -64,46 +64,34 @@ import { useState, useEffect, useRef } from "react";
 
 const Swiper = ({ images }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isGalleryClick, setIsGalleryClick] = useState(true);
   const swiperRef = useRef(null);
 
-  const openPopup = () => {
-    const bodyOverflow = document.querySelector('body');
-    scrollPosition = window.scrollY;
-    bodyOverflow.style.overflow = "hidden";
-    bodyOverflow.style.position = "fixed";
-    bodyOverflow.style.top = `-${scrollPosition}px`;
-    bodyOverflow.style.width = "100%";
-  };
-
-  const closePopup = () => {
-    const bodyOverflow = document.querySelector('body');
-    bodyOverflow.style.removeProperty("overflow");
-    bodyOverflow.style.removeProperty("position");
-    bodyOverflow.style.removeProperty("top");
-    bodyOverflow.style.removeProperty("width");
-    window.scrollTo(0, scrollPosition);
-  };
-
   const galleryClickHandler = () => {
+    if (!isGalleryClick) return; 
     setIsActive(true);
+    openPopup();
+    setIsGalleryClick(false);
   };
 
-  const closeHandler = (event) => {
-    event.stopPropagation();  // предотвращаем всплытие события
+  const closeHandler = () => {
     setIsActive(false);
+    closePopup();
+    setIsGalleryClick(true);
   };
 
-  useEffect(() => {
-    if (isActive) {
-      openPopup();
-    } else {
-      closePopup();
-    }
-  }, [isActive]);
+  // useEffect(() => {
+    // if (isActive) {
+    //   openPopup();
+    // } else {
+    //   closePopup();
+    // }
+  // }, [isActive]);
 
   useEffect(() => {
     const swiperContainer = swiperRef.current;
     const params = {
+      // zoom: true,
       navigation: true,
       pagination: {
         clickable: true,
@@ -133,6 +121,17 @@ const Swiper = ({ images }) => {
           .swiper-pagination-bullet {
             width: 14px;
             height: 14px;
+          }
+          @media (max-width: 440px) {
+            .swiper-button-next,
+            .swiper-button-prev {
+              width: 32px;
+              height: 32px;
+            }
+            .swiper-pagination-bullet {
+              width: 10px;
+              height: 10px;
+            }
           }
         `,
       ],
@@ -174,6 +173,23 @@ const closeButtonStyle = {
   width: '20px'
 };
 
+let bodyOverflow = document.querySelector('body');
 let scrollPosition = 0;
+
+function closePopup() {
+  bodyOverflow.style.removeProperty("overflow");
+  bodyOverflow.style.removeProperty("position");
+  bodyOverflow.style.removeProperty("top");
+  bodyOverflow.style.removeProperty("width");
+  window.scrollTo(0, scrollPosition);
+}
+
+function openPopup() {
+  scrollPosition = window.scrollY;
+  bodyOverflow.style.overflow = "hidden";
+  bodyOverflow.style.position = "fixed";
+  bodyOverflow.style.top = `-${scrollPosition}px`;
+  bodyOverflow.style.width = "100%";
+}
 
 export default Swiper;

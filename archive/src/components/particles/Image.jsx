@@ -22,22 +22,28 @@ import { useState, useEffect } from 'react';
 
 const Image = ({ src, zoomable = false }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isZoomEnabled, setIsZoomEnabled] = useState(true); // Новое состояние
 
   const zoomHandler = () => {
+    if (!isZoomEnabled) return; // Игнорируем вызов, если зум не разрешен
     setIsActive(true);
+    openPopup();
+    setIsZoomEnabled(false); // Отключаем зум после его активации
   };
 
   const closeHandler = () => {
     setIsActive(false);
+    closePopup();
+    setIsZoomEnabled(true); // Включаем зум после закрытия
   };
 
-  useEffect(() => {
-    if (isActive) {
-      openPopup();
-    } else {
-      closePopup();
-    }
-  }, [isActive]);
+  // useEffect(() => {
+  //   if (isActive) {
+  //     openPopup();
+  //   } else {
+  //     closePopup();
+  //   }
+  // }, [isActive]);
 
   return (
     <div>
@@ -91,5 +97,4 @@ function openPopup() {
 }
 
 export default Image;
-
 
