@@ -162,9 +162,9 @@ const modifyContent = (item, i) => {
   // separator.classList.add("separator")
   // content.body.appendChild(separator)
 
-  //удаление картинок и видео для версии для слабовидящих
+  //удаление картинок и видео в версии для слабовидящих
   if (!!window.limit) {
-    const objects = content.querySelectorAll("video, img, figure")
+    const objects = content.querySelectorAll("video, .video_wrapper, img, figure")
     objects.forEach((node) => node.remove())
   }
 
@@ -216,7 +216,6 @@ const modifyContent = (item, i) => {
             dangerouslySetInnerHTML={{ __html: child.innerHTML }}
             key={key}></div>
         )
-
         break
       case "p":
         if (child.classList.contains("t-redactor__text")) {
