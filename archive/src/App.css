@@ -35,15 +35,11 @@
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
-
-  /* padding-inline: 10px; */
   padding-top: 20px;
   padding-bottom: 40px;
-
   font-size: 18px;
   line-height: 1.55;
   color: #313131;
-
   box-sizing: border-box;
 }
 .wrapper.limited input[type="date"] {
@@ -76,14 +72,11 @@ p.news_date,
 .feed p,
 .feed .t-redactor__text,
 .feed ul {
-  /* font-size: 20px; */
-  /* font-size: 24px; */
   font-size: clamp(16px, 2vw, 26px);
 }
 
 .feed h4,
 .feed h2 {
-  /* font-size: 24px; */
   font-size: 28px;
   line-height: 1.3;
   font-weight: bold;
@@ -91,8 +84,6 @@ p.news_date,
 }
 
 .feed h1 {
-  /* font-size: 38px; */
-  /* font-size: 60px; */
   font-size: clamp(28px, 4vw, 60px);
   line-height: 1.23;
   font-weight: 600;
@@ -312,7 +303,6 @@ p.news_date {
   margin: 0 auto !important;
   display: block;
   font-family: "MoscowSans", Arial, sans-serif !important;
-
   box-sizing: border-box;
   padding: 20px 60px;
   color: #ffffff !important;
@@ -349,19 +339,9 @@ p.news_date {
     width: 100%;
     font-size: 16px;
   }
-  /* .feed h1 {
-    font-size: 32px;
-  } */
   .feed h4 {
     font-size: 20px;
   }
-  /* p.news_date,
-  .feed a,
-  .feed p,
-  .feed .t-redactor__text,
-  .feed ul {
-    font-size: 16px;
-  } */
 
   .feed .t-redactor__text,
   .feed .t-redactor__text * {
@@ -377,21 +357,12 @@ p.news_date {
   }
 }
 
-/* @media (max-width: 819px) {
-  .wrapper {
-    padding-inline: 20px;
-  }
-} */
-
 @media (max-width: 640px) {
   .wrapper {
     font-size: 14px;
 
     padding-inline: 20px;
   }
-  /* .feed h1 {
-    font-size: 28px;
-  } */
   .feed h4 {
     font-size: 18px;
   }
@@ -401,15 +372,6 @@ p.news_date {
     font-size: 16px;
   }
 
-  /* .feed .t-redactor__text,
-  .feed ul li,
-  .feed .t-redactor__text * {
-    font-size: 14px;
-  }
-  .feed .t-redactor__quote,
-  .feed .t-redactor__quote * {
-    font-size: 14px;
-  } */
   .feed .t-redactor__preface,
   .feed .t-redactor__preface * {
     font-size: 22px;
@@ -422,10 +384,6 @@ p.news_date {
 }
 
 @media (max-width: 440px) {
-  /* .wrapper {
-    padding-inline: 20px;
-  } */
-
   .wrapper.limited {
     padding-top: 42px;
   }
