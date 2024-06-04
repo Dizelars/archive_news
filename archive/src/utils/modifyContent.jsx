@@ -206,8 +206,14 @@ const modifyContent = (item, i) => {
             .map((img) => img.src)
             .filter((src) => src !== item.image)
 
-          foundSwiper = <Swiper images={srcs} key={+Date.now()} />
-          break
+          // foundSwiper = <Swiper images={srcs} key={+Date.now()} />
+          // break
+          if (srcs.length > 1) {
+            foundSwiper = <Swiper images={srcs} key={+Date.now()} />;
+          } else if (srcs.length === 1) {
+              foundSwiper = <Image src={srcs[0]} alt='' key={+Date.now()} />;
+          }
+          break;
         }
         console.log("MISSED DIIIIIIIIIV")
         console.log(child)

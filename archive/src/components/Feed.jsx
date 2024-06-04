@@ -45,7 +45,7 @@ const Feed = ({ news, limited }) => {
         <a
           className='linkToNews'
           href={`https://gucodd.ru/${
-            limited ? "auto_news_vision" : "auto_news"
+            limited ? "news_vision" : "news"
           }`}>
           <svg
             width='18'

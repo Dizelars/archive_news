@@ -98,7 +98,7 @@ const Swiper = ({ images }) => {
       pagination: {
         clickable: true,
       },
-      // loop: true,
+      loop: true,
       centerInsufficientSlides: true,
       centeredSlides: true,
       injectStyles: [
@@ -106,9 +106,14 @@ const Swiper = ({ images }) => {
           .swiper-button-next,
           .swiper-button-prev {
             background-color: rgb(232, 232, 232);
-            width: 50px;
-            height: 50px;
+            width: 64px;
+            height: 64px;
             border-radius: 100%;
+            color: #000000;
+            transition: all .5s ease;
+          }
+          .swiper-button-next:hover, 
+          .swiper-button-prev:hover {
             color: #62a744;
           }
           .swiper-button-next.swiper-button-disabled, 
@@ -117,8 +122,8 @@ const Swiper = ({ images }) => {
           }
           .swiper-button-next svg,
           .swiper-button-prev svg {
-            width: 60%;
-            height: 60%;
+            width: 50%;
+            height: 50%;
             position: absolute;
             left: 50%;
             top: 50%;
