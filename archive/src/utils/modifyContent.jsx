@@ -2,6 +2,7 @@ import Header from "../components/particles/Header"
 import Image from "../components/particles/Image"
 import RedactorText from "../components/particles/RedactorText"
 import Blockquote from "../components/particles/Blockquote"
+import BlockquoteCallout from "../components/particles/BlockquoteCallout"
 import Separator from "../components/particles/Separator"
 import Swiper from "../components/particles/Swiper"
 import Video from "../components/particles/Video"
@@ -24,30 +25,14 @@ const modifyContent = (item, i) => {
   dateElement.classList.add("news_date")
   content.querySelector("header").appendChild(dateElement)
 
-  const linkElement = document.createElement("a")
-  linkElement.innerHTML = "Источник"
-  linkElement.classList.add("news_source")
-  linkElement.href = item.link
-  content.querySelector("header").appendChild(linkElement)
-
-  // const galleries = content.querySelectorAll("[data-block=gallery]")
-  // galleries.forEach((gallery) => {
-  //   let inner = ""
-  //   const images = gallery.querySelectorAll("img")
-
-  //   images.forEach((img) => {
-  //     inner += `<swiper-slide><img src="${img.src}"/></swiper-slide>`
-  //   })
-  //   gallery.innerHTML = `
-  //   <swiper-container
-  //     pagination="true"
-  //     pagination-clickable="true"
-  //     auto-height="true"
-  //     grab-cursor="true"
-  //     loop="true">
-  //         ${inner}
-  //   </swiper-container>`
-  // })
+  // console.log(item)
+  if (item.link) {
+    const linkElement = document.createElement("a")
+    linkElement.innerHTML = "Источник"
+    linkElement.classList.add("news_source")
+    linkElement.href = item.link
+    content.querySelector("header").appendChild(linkElement)
+  }
 
   // Получаем все ссылки
   const links = content.querySelectorAll("a")
@@ -158,10 +143,6 @@ const modifyContent = (item, i) => {
   titleImg.alt = "title image"
   content.querySelector("header").appendChild(titleImg)
 
-  // const separator = document.createElement("div")
-  // separator.classList.add("separator")
-  // content.body.appendChild(separator)
-
   //удаление картинок и видео в версии для слабовидящих
   if (!!window.limit) {
     const objects = content.querySelectorAll("video, .video_wrapper, img, figure")
@@ -171,6 +152,7 @@ const modifyContent = (item, i) => {
   let foundSwiper = null
   let foundZoom = null
   let foundVideo = null
+  let foundCallout = null
 
   content.body.childNodes.forEach((child) => {
     const tagName = child.localName
@@ -206,8 +188,6 @@ const modifyContent = (item, i) => {
             .map((img) => img.src)
             .filter((src) => src !== item.image)
 
-          // foundSwiper = <Swiper images={srcs} key={+Date.now()} />
-          // break
           if (srcs.length > 1) {
             foundSwiper = <Swiper images={srcs} key={+Date.now()} />;
           } else if (srcs.length === 1) {
@@ -249,6 +229,9 @@ const modifyContent = (item, i) => {
             />
           )
           break
+        } else if (child.classList.contains("t-redactor__callout")) {
+            foundCallout = <BlockquoteCallout innerHTML={child.innerHTML} key={key}/>
+          break
         }
         break
       default:
@@ -265,6 +248,7 @@ const modifyContent = (item, i) => {
   if (foundSwiper) components.push(foundSwiper)
   if (foundZoom) components.push(foundZoom)
   if (foundVideo) components.push(foundVideo)
+  if (foundCallout) components.push(foundCallout)
   components.push(<Separator key={item.pubDate + components.length} />)
 
   return { ...item, content: content.body.innerHTML, components }

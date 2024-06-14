@@ -25,6 +25,10 @@
   color: #62a744 !important;
 }
 
+.feed a {
+  cursor: pointer;
+}
+
 .feed a p.bold {
   display: inline;
   color: rgb(106, 65, 146);
@@ -71,6 +75,8 @@ p.news_date,
 .feed a,
 .feed p,
 .feed .t-redactor__text,
+.feed .t-redactor__quote,
+.feed .t-redactor__callout,
 .feed ul {
   font-size: clamp(16px, 2vw, 26px);
 }
@@ -178,6 +184,19 @@ p.news_date,
   font-style: italic;
 }
 
+.feed .t-redactor__callout {
+	display: flex;
+	align-items: center;
+	justify-content: unset;
+	padding: 20px;
+	background-color: #ebebeb;
+	gap: 12px;
+}
+
+.feed .t-redactor__callout .t-redactor__callout-icon {
+	display: flex;
+}
+
 .feed .video_wrapper video {
   width: 100%;
   height: 100%;
@@ -281,8 +300,9 @@ p.news_date {
 
 .feed header a.news_source {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
   width: fit-content;
+  cursor: pointer;
 }
 
 .separator {
@@ -334,6 +354,18 @@ p.news_date {
   }
 }
 
+@media (max-width: 1370px) {
+  .feed img {
+    max-height: 600px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .feed img {
+    max-height: 400px;
+  }
+}
+
 @media (max-width: 900px) {
   .wrapper {
     width: 100%;
@@ -347,10 +379,14 @@ p.news_date {
   .feed .t-redactor__text * {
     font-size: 16px;
   }
+  
   .feed .t-redactor__quote,
-  .feed .t-redactor__quote * {
+  .feed .t-redactor__quote *,
+  .feed .t-redactor__callout,
+  .feed .t-redactor__callout *  {
     font-size: 16px;
   }
+  
   .feed .t-redactor__preface,
   .feed .t-redactor__preface * {
     font-size: 24px;
@@ -383,6 +419,13 @@ p.news_date {
   }
 }
 
+@media (max-width: 479px) {
+  .feed ul,
+  .feed ol {
+    padding-left: 32px !important;
+  }
+}
+
 @media (max-width: 440px) {
   .wrapper.limited {
     padding-top: 42px;
@@ -403,6 +446,10 @@ p.news_date {
     padding: 10px;
   }
 
+  .feed .t-redactor__callout {
+    padding: 10px;
+  }
+
   .wrapper.limited .filter .filter_wrapper > input {
     width: 132px;
   }
@@ -412,9 +459,5 @@ p.news_date {
   .filter .filter_wrapper > input {
     width: 90px;
     font-size: 10px;
-  }
-  .feed ul,
-  .feed ol {
-    padding-left: 32px !important;
   }
 }
