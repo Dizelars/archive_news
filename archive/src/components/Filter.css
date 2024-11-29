@@ -3,7 +3,7 @@
   border-radius: 10px;
   font-family: "MoscowSans", Arial, sans-serif !important;
 
-  max-width: 140px;
+  max-width: 142px;
 }
 
 .MuiDateCalendar-root {
@@ -50,7 +50,7 @@ button.Mui-selected:hover {
 
 @media (max-width: 1024px) {
   .MuiFormControl-root {
-    max-width: 90px;
+    max-width: 92px;
   }
   
   .MuiFormControl-root .MuiInputBase-root {
@@ -65,7 +65,7 @@ button.Mui-selected:hover {
 
 @media (max-width: 540px) {
   .MuiFormControl-root {
-    max-width: 80px;
+    max-width: 82px;
   }
 
   .MuiInputBase-root.MuiOutlinedInput-root input {

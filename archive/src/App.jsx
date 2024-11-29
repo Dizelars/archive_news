@@ -6,7 +6,8 @@ import Loader from "./components/Loader"
 import Feed from "./components/Feed"
 
 // const url = "https://ictransport.ru/rss-feed-682234369181.xml"
-const url = "https://ictransport.ru/rss-feed-827453696181.xml"
+// const url = "https://ictransport.ru/rss-feed-827453696181.xml"
+const url = "https://coddmac.store/codd_news/copy_xml/news/potok_news.xml"
 
 function App() {
   const [news, setNews] = useState([])
@@ -34,7 +35,7 @@ function App() {
           return turboAttribute === null || turboAttribute === "true"
         })
         newsItems = newsItems.map((el) => {
-          let title, link, pubDate, author, image, content
+          let title, link, pubDate, author, image, category, content
           if (el.querySelector("title"))
             title = el.querySelector("title").textContent
           if (el.querySelector("link"))
@@ -45,11 +46,13 @@ function App() {
             author = el.querySelector("author").textContent
           if (el.querySelector("enclosure"))
             image = el.querySelector("enclosure").attributes.url.textContent
+          if (el.querySelector("category"))
+            category = el.querySelector("category").textContent
           if (el.getElementsByTagName("turbo:content")) {
             content = el.getElementsByTagName("turbo:content")[0].textContent
           }
 
-          return { title, link, pubDate, author, image, content }
+          return { title, link, pubDate, author, image, category, content }
         })
 
         newsItems.sort((a, b) => {

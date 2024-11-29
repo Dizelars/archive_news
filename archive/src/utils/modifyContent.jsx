@@ -15,15 +15,29 @@ const modifyContent = (item, i) => {
   content = content.replaceAll("#nbsp", "&nbsp")
   content = parser.parseFromString(content, "text/html")
 
+  const datePlusCategoryWrapper = document.createElement("div");
+  datePlusCategoryWrapper.classList.add("news_dateTag-wrapper");
+
   const dateElement = document.createElement("p")
   const pubDate = new Date(item.pubDate)
   const day = pubDate.getDate().toString().padStart(2, "0")
   const month = (pubDate.getMonth() + 1).toString().padStart(2, "0")
   const year = pubDate.getFullYear()
-
   dateElement.innerHTML = `${day}.${month}.${year}`
   dateElement.classList.add("news_date")
-  content.querySelector("header").appendChild(dateElement)
+  datePlusCategoryWrapper.appendChild(dateElement);
+  // content.querySelector("header").appendChild(dateElement)
+
+  if(item.category) {
+    console.log(item.category);
+    const categoryTag = document.createElement("div");
+    categoryTag.classList.add("news__tag");
+    categoryTag.innerHTML = item.category;
+
+    datePlusCategoryWrapper.appendChild(categoryTag);
+  }
+
+  content.querySelector("header").appendChild(datePlusCategoryWrapper)
 
   // console.log(item)
   if (item.link) {
