@@ -29,7 +29,7 @@ const modifyContent = (item, i) => {
   // content.querySelector("header").appendChild(dateElement)
 
   if(item.category) {
-    console.log(item.category);
+    // console.log(item.category);
     const categoryTag = document.createElement("div");
     categoryTag.classList.add("news__tag");
     categoryTag.innerHTML = item.category;
@@ -165,7 +165,8 @@ const modifyContent = (item, i) => {
 
   let foundSwiper = null
   let foundZoom = null
-  let foundVideo = null
+  // let foundVideo = null
+  let foundVideo = [];
   let foundCallout = null
 
   content.body.childNodes.forEach((child) => {
@@ -193,8 +194,12 @@ const modifyContent = (item, i) => {
           )
           break
         } else if (child.classList.contains("video_wrapper")) {
-          const video = child.querySelector("video")
-          foundVideo = <Video src={video.src} poster={video.poster} key={key} />
+          // const video = child.querySelector("video")
+          // foundVideo = <Video src={video.src} poster={video.poster} key={key} />
+          let videos = child.querySelectorAll("video");
+          videos.forEach((video) => {
+            foundVideo.push(<Video src={video.src} poster={video.poster} key={key} />);
+          });
           break
         } else if (child.dataset.block === "gallery") {
           const imgs = [...child.querySelectorAll("img")]
@@ -261,7 +266,8 @@ const modifyContent = (item, i) => {
 
   if (foundSwiper) components.push(foundSwiper)
   if (foundZoom) components.push(foundZoom)
-  if (foundVideo) components.push(foundVideo)
+  // if (foundVideo) components.push(foundVideo)
+  if (foundVideo.length !== 0) components.push(foundVideo)
   if (foundCallout) components.push(foundCallout)
   components.push(<Separator key={item.pubDate + components.length} />)
 

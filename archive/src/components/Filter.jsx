@@ -1,7 +1,9 @@
-import { DatePicker } from "@mui/x-date-pickers"
-import { useState, useEffect } from "react"
-import "./Filter.css"
-import dayjs from "dayjs"
+import { DatePicker } from "@mui/x-date-pickers";
+import TextField from "@mui/material/TextField";
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
+import "./Filter.css";
 
 const Filter = ({
   setstartTime,
@@ -9,100 +11,97 @@ const Filter = ({
   setEndMils,
   startTime,
   news,
-  limited,
 }) => {
-  const [textFilter, settextFilter] = useState(null)
+  const [textFilter, settextFilter] = useState(null);
+  const [availableMonths, setAvailableMonths] = useState([]);
+  const [availableYears, setAvailableYears] = useState([]);
 
   const setTextFilterOnResize = () => {
-    if (window.innerWidth >= 840) return settextFilter("Показывать новости за")
-      
-    // if (window.innerWidth < 840 && window.innerWidth > 540)
-    //   return settextFilter("Показывать  новости за")
-
-    return settextFilter("Новости за")
-  }
+    settextFilter(
+      window.innerWidth >= 840 ? "Показывать новости за" : "Новости за"
+    );
+  };
 
   useEffect(() => {
-    setTextFilterOnResize()
+    setTextFilterOnResize();
+    window.addEventListener("resize", setTextFilterOnResize);
+    return () => window.removeEventListener("resize", setTextFilterOnResize);
+  }, []);
 
-    window.addEventListener("resize", setTextFilterOnResize)
+  useEffect(() => {
+    // Получаем все доступные месяцы и годы из обрезанного массива новостей
+    const dates = news.map((item) => dayjs(item.pubDate));
+    const uniqueYears = [...new Set(dates.map((date) => date.year()))].sort(
+      (a, b) => b - a
+    );
 
-    return function () {
-      window.removeEventListener("resize", setTextFilterOnResize)
-    }
-  }, [])
+    setAvailableYears(uniqueYears);
+
+    // Формируем объект { год: [массив доступных месяцев] }
+    const monthsByYear = uniqueYears.reduce((acc, year) => {
+      acc[year] = [
+        ...new Set(
+          dates
+            .filter((date) => date.year() === year)
+            .map((date) => date.month())
+        ),
+      ];
+      return acc;
+    }, {});
+
+    setAvailableMonths(monthsByYear);
+  }, [news]);
 
   return (
-    <section className='filter'>
-      <div className='filter_wrapper'>
-        <span className='text_filter_one'>{textFilter}</span>
-        {!limited ? (
+    <section className="filter">
+      <div className="filter_wrapper">
+        <span className="text_filter_one">{textFilter}</span>
+
+        {/* Фильтр по году */}
+        <DatePicker
+          views={["year"]}
+          value={startTime}
+          minDate={dayjs(news[news.length - 1].pubDate)} // Минимальная дата: самая старая новость
+          maxDate={dayjs(news[0].pubDate)} // Максимальная дата: самая новая новость
+          onChange={(newValue) => {
+            if (!newValue) return;
+            const end = newValue.endOf("year");
+            setstartTime(newValue);
+            setstartMils(+newValue);
+            setEndMils(+end);
+          }}
+          shouldDisableYear={(year) => !availableYears.includes(year.year())}
+          renderInput={(props) => <TextField {...props} label="Выберите год" />}
+        />
+        
+        {/* Фильтр по месяцу */}
+        {startTime && (
           <DatePicker
-            minDate={dayjs(
-              new Date(news[news.length - 1].pubDate).toISOString()
-            )}
-            maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
-            value={startTime}
             views={["month"]}
+            value={startTime}
+            minDate={dayjs(startTime).startOf("year")} // Месяца только для выбранного года
+            maxDate={dayjs(startTime).endOf("year")}
             onChange={(newValue) => {
-              const end = newValue.add(1, "month").subtract(1, "day")
-              setstartTime(newValue)
-              setstartMils(+newValue)
-              setEndMils(+end)
+              if (!newValue) return;
+              const end = newValue.endOf("month");
+              setstartTime(newValue);
+              setstartMils(+newValue);
+              setEndMils(+end);
             }}
-          />
-        ) : (
-          <input
-            min={dayjs(
-              new Date(news[news.length - 1].pubDate).toISOString()
-            ).format("YYYY-MM")}
-            max={dayjs(new Date(news[12].pubDate).toISOString()).format(
-              "YYYY-MM"
+            shouldDisableMonth={(month) =>
+              !(
+                availableMonths[startTime.year()] &&
+                availableMonths[startTime.year()].includes(month.month())
+              )
+            }
+            renderInput={(props) => (
+              <TextField {...props} label="Выберите месяц" />
             )}
-            type='month'
-            value={startTime.format("YYYY-MM")}
-            onChange={(e) => {
-              const start = dayjs(e.target.value)
-              const end = start.add(1, "month").subtract(1, "day")
-              setstartTime(start)
-              setstartMils(+start)
-              setEndMils(+end)
-            }}
           />
         )}
-        {/* <span className='text_filter_two'>по</span> */}
-
-        {/* {!limited ? (
-          <DatePicker
-            minDate={dayjs(
-              new Date(news[news.length - 1].pubDate).toISOString()
-            )}
-            maxDate={dayjs(new Date(news[12].pubDate).toISOString())}
-            value={endTime}
-            onChange={(newValue) => {
-              setendTime(newValue)
-              setEndMils(+newValue)
-            }}
-          />
-        ) : (
-          <input
-            min={dayjs(
-              new Date(news[news.length - 1].pubDate).toISOString()
-            ).format("YYYY-MM-DD")}
-            max={dayjs(new Date(news[12].pubDate).toISOString()).format(
-              "YYYY-MM-DD"
-            )}
-            type='date'
-            value={endTime.format("YYYY-MM-DD")}
-            onChange={(e) => {
-              setendTime(dayjs(e.target.value))
-              setEndMils(+dayjs(e.target.value))
-            }}
-          />
-        )} */}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;

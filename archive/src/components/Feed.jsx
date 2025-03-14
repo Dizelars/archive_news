@@ -5,15 +5,10 @@ import dayjs from "dayjs"
 
 const Feed = ({ news, limited }) => {
   const [startTime, setstartTime] = useState(
-    news[12]
-      ? dayjs(+new Date(news[12].pubDate)).date(1)
+    news[22]
+      ? dayjs(+new Date(news[22].pubDate)).date(1)
       : dayjs(+new Date(news[0].pubDate)).date(1)
   )
-  // const [endTime, setendTime] = useState(
-  //   news[12]
-  //     ? dayjs(new Date(news[12].pubDate).toISOString())
-  //     : dayjs(new Date(news[0].pubDate).toISOString())
-  // )
   const [startMils, setstartMils] = useState(+startTime)
   const [endMils, setEndMils] = useState(
     +startTime.add(1, "month").subtract(1, "day")
@@ -26,11 +21,12 @@ const Feed = ({ news, limited }) => {
   const filterNews = useCallback(
     (el) => {
       const mils = Date.parse(el.pubDate)
-
-      if (news[12] && mils > +new Date(news[12].pubDate)) return false
+      
+      if (news[22] && mils > +new Date(news[22].pubDate)) return false
       if (mils > endMils || mils < startMils) return false
       return true
     },
+    
     [endMils, startMils, news]
   )
 
@@ -70,21 +66,10 @@ const Feed = ({ news, limited }) => {
           setstartMils,
           setstartTime,
           startTime,
-          news,
+          news: news.slice(22),
           limited,
         }}
       />
-      {/* {selectedNews
-        .slice(0, 5)
-        .map(modifyContent)
-        .map((item) => (
-          <div
-            className='feed'
-            dangerouslySetInnerHTML={{
-              __html: item.content,
-            }}
-            key={item.pubDate}></div>
-        ))} */}
       {selectedNews
         .slice(0, counter)
         .map(modifyContent)
