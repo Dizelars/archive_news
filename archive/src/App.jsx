@@ -5,10 +5,7 @@ import Error from "./components/Error"
 import Loader from "./components/Loader"
 import Feed from "./components/Feed"
 
-// const url = "https://ictransport.ru/rss-feed-682234369181.xml"
-// const url = "https://ictransport.ru/rss-feed-827453696181.xml"
-// const url = "https://coddmac.store/codd_news/copy_xml/news/potok_news.xml"
-const url = "https://coddmac.store/CODD_xml/xml/news/potok_news.xml"
+
 
 function App() {
   const [news, setNews] = useState([])
